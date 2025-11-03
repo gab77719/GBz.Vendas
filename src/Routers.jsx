@@ -1,8 +1,8 @@
 import {Routes, Route} from "react-router-dom"
 import Home from "./assets/pages/Home"
 import About from "./assets/pages/About"
-import Signup from "../src/pages/Signup"
-import Signin from "../src/pages/Signin"
+import Signup from "./pages/Signup"
+import Signin from "./pages/Signin"
 
 export default () => {
     return (

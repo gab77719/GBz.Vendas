@@ -3,25 +3,49 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { signInWithGooglePopup } from '../../firebase'; // Importação correta
+import { signInWithGooglePopup } from '../../firebase';
+import { useNavigate } from 'react-router-dom';
+import { doLogin } from '../../lib/AuthHandler';
+import { useAuth } from '../../contexts/AuthContext';
+
+
 
 export default function Signin() {
     const [loading, setLoading] = useState(false);
-    const [user, setUser] = useState(null);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
+    const {setLogged, setUser} = useAuth();
+
 
     async function handleGoogleSignIn() {
         setLoading(true);
         setError(null);
+
         try {
-            const userObj = await signInWithGooglePopup();
-            setUser({
+            const result = await signInWithGooglePopup();
+            
+            if(!result) {
+                throw new Error('Usuário não encontrado');
+            }   
+
+            const userObj = result;
+            const token = await userObj.getIdToken();
+
+            const userData = {
                 name: userObj.displayName,
                 email: userObj.email,
                 photoURL: userObj.photoURL,
-                uid: userObj.uid,
-            });
-            console.log('Usuário logado com sucesso:', userObj);
+                uid: userObj.uid
+            }
+
+            doLogin(token, userData);
+
+            setLogged(true);
+            setUser(userData);
+            console.log('Usuário logado:', userData);
+
+            navigate('/');
+
         } catch (err) {
             console.error('Erro ao fazer login com Google:', err);
             setError(err.message || 'Erro no login');
@@ -60,22 +84,8 @@ export default function Signin() {
                 <p className='register'>
                     Não tem uma conta? <Link to='/signup'>Cadastre-se</Link>
                 </p>
-                {error && <p style={{ color: 'red', marginTop: 12 }}>{error}</p>}
-                {user && (
-                    <div className='userInfo' style={{ marginTop: 16 }}>
-                        <img 
-                            src={user.photoURL}
-                            alt={user.name}
-                            style={{ width: 48, borderRadius: '50%' }}
-                        />
-                        <div>
-                            <p>
-                                <strong>{user.name}</strong>
-                            </p>
-                            <p style={{ fontSize: 12 }}>{user.email}</p>
-                        </div>
-                    </div>
-                )}
+                {error && <p style={{ color: 'red', marginTop: 12 }}>
+                {error}</p>}
             </div>
 
             <p className='terms'>
