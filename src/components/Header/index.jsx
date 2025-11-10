@@ -95,7 +95,8 @@ export default function Header() {
                                         className='profileImg'
                                     />
 
-                                    <span>{user.name?.split('')[0]}</span>
+                                    <span>{user.name?.split(' ')[0]}</span>
+
                                     <FaAngleDown size={16}
                                         className='arrow' />
                                 </button>

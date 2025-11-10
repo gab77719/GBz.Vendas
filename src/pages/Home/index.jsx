@@ -1,10 +1,12 @@
 import './Home.css'
 import { Link } from 'react-router-dom';
+import Categories from '../../components/Categories';
+import { useState } from 'react';
 
 export default function Page() {
     return (
         <div>
-            <h1>Pagina Home</h1>
-            <Link to='/about'>Home</Link>
+            <Categories />
         </div>
-    )}
+    )
+}
