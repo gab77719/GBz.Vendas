@@ -1,11 +1,12 @@
 import React from 'react';
-import Categories from './Categories.css';
+import './Categories.css';
 import Celular from '../../assets/img/celular.png';
 import Carro from '../../assets/img/carro.png';
 import Decoracao from '../../assets/img/decoracao.png';
 import Eletro from '../../assets/img/eletro.png';
 import Esporte from '../../assets/img/esporte.png';
 import Habitacao from '../../assets/img/habitacao.png';
+
 
 const categoriesData = [
     {name: 'Celular', img: Celular},
@@ -22,7 +23,7 @@ export default function Categories ({ selectedbtn, onSelect}) {
             {categoriesData.map((cat) => (
                 <button
                     key={cat.name}
-                    onClick={() => onSelect(cat.name)}
+                    onClick={() => onSelect?.(cat.name)}
                     className={`btn ${selectedbtn === cat.name ?
                     'selectedBtn' : ''}`}
                 >
@@ -33,4 +34,5 @@ export default function Categories ({ selectedbtn, onSelect}) {
         </section>
     )
 }
+
 
