@@ -3,7 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { signInWithGooglePopup } from '../../firebase';
+import { signInWithGooglePopup } from '../../fire';
 import { useNavigate } from 'react-router-dom';
 import { doLogin } from '../../lib/AuthHandler';
 import { useAuth } from '../../contexts/AuthContext';
